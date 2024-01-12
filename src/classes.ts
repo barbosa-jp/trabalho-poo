@@ -3,44 +3,53 @@ interface IPessoa{
 }
 
 abstract class Pessoa{
-    private nome: string;
-    private senha: string;
-    protected matricula: string;
+    protected _nome: string;
+    protected _cpf: number;
+    protected _senha: string;
+    protected _matricula: string;
 
-    constructor(nome: string, senha: string, matricula: string){
-        this.nome = nome;
-        this.senha = senha;
-        this.matricula = matricula;
+    constructor(){
+        this._nome = this.nome;
+        this._senha = this.senha;
+        this._matricula = this.matricula;
+        this._cpf = this.cpf;
     }
 
-    public setSenha(senha: string){
-        this.senha = senha;
+    public set senha(novaSenha: string){
+        this._senha = novaSenha;
     }
 
-    public getSenha(): string{
-        return this.senha;
+    public get senha(): string{
+        return this._senha;
     }
     
-    public setNome(nome: string){
-        this.nome = nome;
+    public set nome(nome: string){
+        this._nome = nome;
     }
 
-    public getNome(): string{
-        return this.nome;
+    public get nome(): string{
+        return this._nome;
     }
 
-    public setMatricula(matricula: string){
-        this.matricula = matricula;
+    public set cpf(novoCPF: number){
+        this._cpf = novoCPF;
     }
 
-    public getMatricula(): string{
+    public get cpf(): number{
+        return this._cpf;
+    }
+
+    public set matricula(matricula: string){
+        this._matricula = matricula;
+    }
+
+    public get matricula(): string{
         return this.matricula;
     }
 }
 class Aluno extends Pessoa implements IPessoa{
-
-    constructor(nome: string, senha: string, matricula: string){
-        super(nome,senha,matricula)
+    constructor(){
+        super();
     }
 
     submeterTarefa(tarefa: Tarefa, curso: Curso) {
@@ -49,12 +58,9 @@ class Aluno extends Pessoa implements IPessoa{
         while(encontrado ===false){
             if (curso.tarefas[contador].nome === tarefa.nome){
                 encontrado = true;
-                console.log(tarefa)
-                console.log("oi")
                 for(let i = 0; i < tarefa.alunosPendentes.length; i++){
                     if (tarefa.alunosPendentes[i].matricula === this.matricula){
                         tarefa.alunosPendentes.splice(i, 1);
-                        console.log(tarefa.alunosPendentes);
                     }
                 }
             }
@@ -67,9 +73,8 @@ class Aluno extends Pessoa implements IPessoa{
 }
 
 class Professor extends Pessoa implements IPessoa{
-
-    constructor(nome: string, senha: string, matricula: string){
-        super(nome,senha,matricula)
+    constructor(){
+        super()
     }
     submeterTarefa(tarefa: Tarefa, curso: Curso) {
         curso.tarefas.push(tarefa);
@@ -77,38 +82,38 @@ class Professor extends Pessoa implements IPessoa{
 }
 
 class Curso{
-    public nome: string;
-    public alunos: Aluno[];
-    public tarefas: Tarefa[];
+    private _nome: string;
+    private _alunos: Aluno[];
+    private _tarefas: Tarefa[];
 
-    constructor(nome: string, alunos: Aluno[], tarefas: Tarefa[]){
-        this.nome = nome;
-        this.alunos = alunos;
-        this.tarefas = tarefas;
+    constructor(){
+        this._nome = this.nome;
+        this._alunos = this.alunos;
+        this._tarefas = this.tarefas;
     }
 
-    public setNome(nome: string){
-        this.nome = nome;
+    public set nome(nome: string){
+        this._nome = nome;
     }
 
-    public getNome(): string{
-        return this.nome;
+    public get nome(): string{
+        return this._nome;
     }
 
-    public setAlunos(alunos: Aluno[]){
-        this.alunos = alunos;
+    public set alunos(alunos: Aluno[]){
+        this._alunos = alunos;
     }
 
-    public getAlunos(): Aluno[]{
-        return this.alunos;
+    public get alunos(): Aluno[]{
+        return this._alunos;
     }
 
-    public setTarefas(tarefas: Tarefa[]){
-        this.tarefas = tarefas;
+    public set tarefas(tarefas: Tarefa[]){
+        this._tarefas = tarefas;
     }
 
-    public getTarefas(): Tarefa[]{
-        return this.tarefas;
+    public get tarefas(): Tarefa[]{
+        return this._tarefas;
     }
 
     inserirAluno(aluno: Aluno){
@@ -117,27 +122,27 @@ class Curso{
 }
 
 class Tarefa{
-    private nome: string;
-    private alunosPendentes: Aluno[]; 
+    private _nome: string;
+    private _alunosPendentes: Aluno[]; 
 
-    constructor(nome:string, alunosPendentes: Aluno[]){
-        this.nome = nome;
-        this.alunosPendentes = alunosPendentes;
+    constructor(){
+        this._nome = this.nome;
+        this._alunosPendentes = this.alunosPendentes;
     }
 
-    public setNome(nome: string){
-        this.nome = nome;
+    public set nome(nome: string){
+        this._nome = nome;
     }
 
-    public getNome(): string{
-        return this.nome;
+    public get nome(): string{
+        return this._nome;
     }
 
-    public setAlunosPendentes(alunosPendentes: Aluno[]){
-        this.alunosPendentes = alunosPendentes;
+    public set alunosPendentes(alunosPendentes: Aluno[]){
+        this._alunosPendentes = alunosPendentes;
     }
 
-    public getAlunosPendentes(): Aluno[]{
-        return this.alunosPendentes;
+    public get alunosPendentes(): Aluno[]{
+        return this._alunosPendentes;
     }
 }
